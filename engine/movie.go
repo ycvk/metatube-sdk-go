@@ -23,8 +23,8 @@ func (e *Engine) searchMovieFromDB(keyword string, provider mt.MovieProvider, al
 	tx := e.db.
 		// Note: keyword might be an ID or just a regular number, so we should
 		// query both of them for best match. Also, case should not matter.
-		Where("number = ? COLLATE NOCASE", keyword).
-		Or("id = ? COLLATE NOCASE", keyword)
+		Where("number COLLATE nocase = ?", keyword).
+		Or("id COLLATE nocase = ?", keyword)
 	if all {
 		err = tx.Find(&infos).Error
 	} else {
@@ -202,7 +202,7 @@ func (e *Engine) getMovieInfoFromDB(provider mt.MovieProvider, id string) (*mode
 	info := &model.MovieInfo{}
 	err := e.db. // Exact match here.
 			Where("provider = ?", provider.Name()).
-			Where("id = ? COLLATE NOCASE", id).
+			Where("id COLLATE nocase = ?", id).
 			First(info).Error
 	return info, err
 }

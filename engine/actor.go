@@ -22,7 +22,7 @@ import (
 func (e *Engine) searchActorFromDB(keyword string, provider mt.Provider) (results []*model.ActorSearchResult, err error) {
 	var infos []*model.ActorInfo
 	if err = e.db.
-		Where("provider = ? AND name = ? COLLATE NOCASE",
+		Where("provider = ? AND name COLLATE nocase = ?",
 			provider.Name(), keyword).
 		Find(&infos).Error; err == nil {
 		for _, info := range infos {
@@ -145,7 +145,7 @@ func (e *Engine) getActorInfoFromDB(provider mt.ActorProvider, id string) (*mode
 	info := &model.ActorInfo{}
 	err := e.db. // Exact match here.
 			Where("provider = ?", provider.Name()).
-			Where("id = ? COLLATE NOCASE", id).
+			Where("id COLLATE nocase = ?", id).
 			First(info).Error
 	return info, err
 }

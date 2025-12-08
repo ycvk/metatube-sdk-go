@@ -15,7 +15,7 @@ func (e *Engine) getMovieReviewsFromDB(provider mt.MovieProvider, id string) (*m
 	info := &model.MovieReviewInfo{}
 	err := e.db. // Exact match here.
 			Where("provider = ?", provider.Name()).
-			Where("id = ? COLLATE NOCASE", id).
+			Where("id COLLATE nocase = ?", id).
 			First(info).Error
 	return info, err
 }

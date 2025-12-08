@@ -80,6 +80,8 @@ func (e *engine) AutoMigrate() error {
 			buildNocaseIndexSQL(model.MovieMetadataTableName, "provider"),
 			buildNocaseIndexSQL(model.MovieMetadataTableName, "id"),
 			buildNocaseIndexSQL(model.MovieMetadataTableName, "number"),
+			buildNocaseIndexSQL(model.MovieReviewsTableName, "provider"),
+			buildNocaseIndexSQL(model.MovieReviewsTableName, "id"),
 			// Create indexes for full-text search.
 			buildTrgmIndexSQL(model.ActorMetadataTableName, "name"),
 			buildTrgmIndexSQL(model.MovieMetadataTableName, "number"),
